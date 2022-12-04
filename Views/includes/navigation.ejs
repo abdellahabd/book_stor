@@ -1,0 +1,36 @@
+<header class="main-header">
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a href="/" class="<%= pagetitle==='shop'?'active':' ' %>">Shop</a>
+      </li>
+      <li class="main-header__item">
+        <a href="/products" class="<%= pagetitle==='Products'?'active':' ' %>"
+          >Products</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a href="/cart" class="<%= pagetitle==='Cart'?'active':' ' %>">Cart</a>
+      </li>
+      <li class="main-header__item">
+        <a href="/order" class="<%= pagetitle==='Your order'?'active':' ' %>"
+          >Order</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          href="/admin/add_product"
+          class="<%= pagetitle=='ADD Product'?'active':' ' %>"
+          >Add Product</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          href="/admin/products"
+          class="<%= pagetitle==='Admin Product'?'active':' ' %>"
+          >Admin Product</a
+        >
+      </li>
+    </ul>
+  </nav>
+</header>
