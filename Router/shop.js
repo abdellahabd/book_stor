@@ -10,6 +10,8 @@ router.get("/products", shopController.GETProducts);
 router.get("/cart", shopController.GetCart);
 router.post("/cart", shopController.PostCart);
 
+router.post("/cart-delete-item", shopController.postCartDeleteProduct);
+
 router.get("/order", shopController.GetOrder);
 router.get("/chekout", shopController.Getchekout);
 

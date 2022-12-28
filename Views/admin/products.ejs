@@ -24,8 +24,8 @@
             </p>
           </div>
           <div class="card__actions">
-           <button> <a href="/admin/edit-product">edit</a>  
-            <button class="btn">Delete</button>
+           <button class="btn"> <a href="/admin/edit_products/<%= pro.id %>?edit=true ">edit</a>  
+            <button class="btn"><a href="/admin/delete_products/<%= pro.id %>">Delete</button>
           </div>
         </article>
         <% } %>
