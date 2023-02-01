@@ -1,19 +1,20 @@
 const Products = require("../models/products");
 const Cart = require("../models/cart");
+const { where } = require("sequelize");
 
 exports.GETindex = (req, res, next) => {
-  Products.fetchall()
-    .then(([rows, fileContent]) => {
-      res.render("shop/index", { products: rows, pagetitle: "shop" });
+  Products.findAll()
+    .then((Products) => {
+      res.render("shop/index", { products: Products, pagetitle: "shop" });
     })
     .catch((err) => {
       console.log(err);
     });
 };
 exports.GETProducts = (req, res, next) => {
-  Products.fetchall().then(([rows, fileContent]) => {
+  Products.findAll().then((Products) => {
     res.render("shop/product-list", {
-      products: rows,
+      products: Products,
       pagetitle: "Products",
     });
   });
@@ -21,7 +22,7 @@ exports.GETProducts = (req, res, next) => {
 
 exports.GetCart = (req, res, next) => {
   Cart.getCart((cart) => {
-    Products.fetchall((products) => {
+    Products.findAll().then((products) => {
       const cartProducts = [];
       for (product of products) {
         const cartProductData = cart.products.find(
@@ -41,7 +42,7 @@ exports.GetCart = (req, res, next) => {
 };
 exports.PostCart = (req, res, next) => {
   const prodid = req.body.productID;
-  Products.findbyid(prodid, (product) => {
+  Products.findByPk(prodid, (product) => {
     Cart.addPROd(prodid, product.price);
   });
   res.redirect("/cart");
@@ -55,11 +56,11 @@ exports.GetOrder = (req, res, next) => {
 };
 exports.GETByID = (req, res, next) => {
   const PID = req.params.productID;
-  Products.findbyid(PID)
-    .then(([product]) => {
+  Products.findByPk(PID)
+    .then((product) => {
       res.render("shop/product-details", {
-        pagetitle: "Details",
-        pro: product[0],
+        pagetitle: product.title,
+        pro: product,
       });
     })
     .catch((err) => console.log(err));

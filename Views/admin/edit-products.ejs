@@ -16,7 +16,7 @@
         </div>
         <div class="form-control">         
           <label for="imageurl">image URL</label>
-          <input type="text" name="imageurl" id="imageurl"   value=" <% if (editmod) { %><%=prod.imgaurl%> <% } %>"/>
+          <input type="text" name="imageurl" id="imageurl"   value=" <% if (editmod) { %><%=prod.imageurl%> <% } %>"/>
         </div>
         <div class="form-control">         
           <label for="price">Price</label>
@@ -30,7 +30,8 @@
         <% if (editmod) { %>
          <input type="hidden" name="id" value="<%= prod.id %> "/>
         <% } %>
-        <button class="btn" type="submit">Add Product</button>
+        <button class="btn" type="submit"><% if (editmod) { %>Update Product
+          <% } else { %>ADD product<% } %></button>
       </form>
     </main>
     <%- include('../includes/end.ejs') %> 

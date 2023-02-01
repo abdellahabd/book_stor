@@ -22,7 +22,7 @@
     "pug": "^3.0.2",
     "sequelize": "^6.28.0",
     "sqlite3": "^5.1.4",
-    "tedious": "^11.8.0"
+    "tedious": "^11.0.8"
   },
   "description": ""
 }
