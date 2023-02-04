@@ -5,6 +5,10 @@ const sequelize = require("./util/database");
 
 const Product = require("./models/products");
 const User = require("./models/User");
+const Cart = require("./models/cart");
+const CartItem = require("./models/CertItem");
+const Order = require("./models/Order");
+const OrderItem = require("./models/OrderItem");
 
 const shopRoute = require("./Router/shop");
 const adminRoute = require("./Router/admiin");
@@ -32,6 +36,16 @@ app.use(eruerRoute);
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
 
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Product.belongsToMany(Cart, { through: CartItem });
+Cart.belongsToMany(Product, { through: CartItem });
+
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
+Product.belongsToMany(Order, { through: OrderItem });
+
 sequelize
   .sync({ force: false })
   .then((result) => {
@@ -47,6 +61,9 @@ sequelize
     return user;
   })
   .then((user) => {
+    return user.createCart();
+  })
+  .then((res) => {
     app.listen(2000);
   })
   .catch((err) => {
