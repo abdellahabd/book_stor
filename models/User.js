@@ -14,6 +14,12 @@ const User = Sequelize.define("user", {
   email: {
     type: DataTypes.STRING,
   },
+  password: {
+    type: DataTypes.STRING,
+    allownull: false,
+  },
+  restToken: { type: DataTypes.STRING },
+  restTokenExperation: { type: DataTypes.DATE },
 });
 
 module.exports = User;

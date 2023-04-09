@@ -13,7 +13,7 @@
           </header>
           <div class="card__image">
             <img
-              src="<%= pro.imageurl %> "
+              src="/<%= pro.imageurl %> "
               alt="<%= pro.title %> "
             />
           </div>
@@ -29,9 +29,14 @@
         </article>
         <% } %>
       </div>
+      <section class="pagination">
+        <a href="/?page=1">1</a>
+        <a href="/?page=2">2</a>
+      </section>
     </main>
     <% } else {%>
     <h1>there are no Products</h1>
     <% } %>
+    <a href="/admin/Download" >Download github sheet</a>
   </body>
 </html>

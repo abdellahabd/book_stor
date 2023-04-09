@@ -1,10 +1,15 @@
 const Products = require("../models/products");
-const User = require("../models/User");
+
+const fs = require("fs");
+const path = require("path");
+
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-products", {
     pagetitle: "ADD Product",
     editmod: false,
     path: "/admin/add_product",
+    errue: "",
+    oldData: { title: "", price: "", desciptions: "" },
   });
 };
 exports.GetEditProduct = (req, res, next) => {
@@ -23,7 +28,7 @@ exports.GetEditProduct = (req, res, next) => {
 exports.PostEditProduct = (req, res, next) => {
   const id = req.body.id;
   const title = req.body.title;
-  const imageurl = req.body.imageurl;
+  const image = req.file;
   const Price = req.body.Price;
   const desciptions = req.body.desciptions;
   Products.update(
@@ -40,18 +45,30 @@ exports.PostEditProduct = (req, res, next) => {
 };
 exports.PsotADDProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageurl = req.body.imageurl;
+  const image = req.file;
   const price = req.body.Price;
   const desciptions = req.body.desciptions;
-  req.user
-    .createProduct({
-      title: title,
-      price: price,
-      description: desciptions,
-      imageurl: imageurl,
-    })
+  if (!image) {
+    return res.status(400).render("admin/edit-products", {
+      pagetitle: "Sing up",
+      editmod: false,
+      oldData: {
+        title: title,
+        price: price,
+        desciptions: desciptions,
+      },
+      errue: "invalide image file",
+    });
+  }
+  const imageurl = image.path;
+  Products.create({
+    title: title,
+    price: price,
+    description: desciptions,
+    imageurl: imageurl,
+  })
     .then(() => {
-      console.log("tuble created ");
+      console.log("Product created");
       res.redirect("/");
     })
     .catch((errr) => {
@@ -82,4 +99,16 @@ exports.DeleteProduct = (req, res, next) => {
     .then((result) => {
       res.redirect("/admin/products");
     });
+};
+
+exports.GetDownload = (req, res, next) => {
+  const filepath = path.join(
+    "data",
+    "invoices",
+    "git-cheat-sheet-education.pdf"
+  );
+  const file = fs.createReadStream(filepath);
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "inline; filename='github sheet' ");
+  file.pipe(res);
 };

@@ -3,6 +3,10 @@
 
   <body>
     <%- include('includes/navigation.ejs') %> 
+    <% if(!erure) { %>
     <h1>Page Not Found!</h1>
+    <% }else { %>
+      <h1>email alrady axist</h1>
+      <% } %>
     <%- include('includes/end.ejs') %> 
 
